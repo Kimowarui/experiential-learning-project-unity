@@ -376,6 +376,7 @@
 "Assets/Scripts/Die.cs"
 "Assets/Scripts/GameObjectSpawn.cs"
 "Assets/Scripts/Powder.cs"
+"Assets/Scripts/Spatula.cs"
 "Assets/Scripts/Table_press.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
