@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,6 +16,7 @@ public class TablePress : MonoBehaviour
     private double pressure;
     private bool inProgress;
     private bool hasTablet;
+    public bool isPowderExcess;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,7 @@ public class TablePress : MonoBehaviour
         pressure = 0;
         inProgress = false;
         hasTablet = false;
+        isPowderExcess = false;
     }
 
     // Update is called once per frame
@@ -47,9 +50,17 @@ public class TablePress : MonoBehaviour
         if (isReleaseValveLocked) {
             pressure += 0.25;
         }
-        if (pressure >= 1 && powder && !inProgress) StartPressTablet();
-
         Talk("Current Pressure:" + pressure + " ton");
+        if (pressure >= 1 && powder && !inProgress) {
+            Debug.Log(powder.getIsExcessive());
+            if (powder.getIsExcessive()) {
+                Talk("Please remove Excess Powder!");
+                pressure = 0;
+                return;
+            }
+            StartPressTablet();
+        }
+
         Debug.Log("Current Pressure:" + pressure + " ton");
     }
 

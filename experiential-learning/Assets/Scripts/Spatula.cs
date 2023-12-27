@@ -9,6 +9,7 @@ public class Spatula : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
     private RectTransform rectTransform;
     private Image image;
     private CanvasGroup canvasGroup;
+    private Transform parent;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -36,5 +37,15 @@ public class Spatula : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
         rectTransform = GetComponent<RectTransform>();
         image = GetComponent<Image>();
         canvasGroup = GetComponent<CanvasGroup>();
+        parent = transform.parent;
+    }
+    private void OnTriggerEnter2D(Collider2D collider2D) {
+        // if ((targetLayer.value & (1 << collider2D.gameObject.layer)) != 0) {
+        //     isExcessive = false;
+        //     Debug.Log("Collision detected with " + collider2D.gameObject.name);
+        // }
+        if (collider2D.GetComponentInParent<TablePress>()) {
+            collider2D.GetComponent<Powder>().removeExcessivePowder();
+        }
     }
 }

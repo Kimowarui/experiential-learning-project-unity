@@ -1,5 +1,6 @@
  using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Drawing;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,6 +11,8 @@ public class Powder : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     private RectTransform rectTransform;
     private Image image;
     private CanvasGroup canvasGroup;
+    private bool isExcessive;
+    public LayerMask targetLayer;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -37,6 +40,14 @@ public class Powder : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         rectTransform = GetComponent<RectTransform>();
         image = GetComponent<Image>();
         canvasGroup = GetComponent<CanvasGroup>();
+        isExcessive = true;
+    }
+    public void removeExcessivePowder() {
+        Debug.Log("Remove Excessive Powder");
+        isExcessive = false;
+    }
+    public bool getIsExcessive() {
+        return isExcessive;
     }
 
 }
