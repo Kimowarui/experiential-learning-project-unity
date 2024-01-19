@@ -16,7 +16,7 @@ public class TablePress : MonoBehaviour
     private double pressure;
     private bool inProgress;
     private bool hasTablet;
-    public bool isPowderExcess;
+    private Powder powder;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +28,6 @@ public class TablePress : MonoBehaviour
         pressure = 0;
         inProgress = false;
         hasTablet = false;
-        isPowderExcess = false;
     }
 
     // Update is called once per frame
@@ -42,6 +41,8 @@ public class TablePress : MonoBehaviour
         if (isReleaseValveLocked) pressure = 0;
         isReleaseValveLocked = !isReleaseValveLocked;
         Debug.Log("Release Valve:" + isReleaseValveLocked);
+        string message = isReleaseValveLocked ? "Locked" : "Unlocked";
+        Talk("Release Valve is " + message);
     }
 
 
@@ -49,6 +50,9 @@ public class TablePress : MonoBehaviour
         Powder powder = GetComponentInChildren<Powder>();
         if (isReleaseValveLocked) {
             pressure += 0.25;
+        } else {
+            Talk("Please lock release valve");
+            return;
         }
         Talk("Current Pressure:" + pressure + " ton");
         if (pressure >= 1 && powder && !inProgress) {
@@ -68,8 +72,12 @@ public class TablePress : MonoBehaviour
         if (hasTablet && pressure == 0) {
             hasTablet = false;
             inProgress = false;
+            this.powder.gameObject.SetActive(true);
+            powder.toTablet();
             Talk("Congrats! You successfully make your own tablet.");
             Debug.Log("Congrats! You successfully make your own tablet.");
+        } else if (pressure != 0) {
+            Talk("Please unlock release valve before ejecting tablet");
         }
     }
 
@@ -86,8 +94,6 @@ public class TablePress : MonoBehaviour
 
     private void StartPressTablet() {
         inProgress = true;
-        Powder powder = GetComponentInChildren<Powder>();
-        Destroy(powder.gameObject);
         StartCoroutine(SimulatePressTablet());
     }
 
@@ -101,11 +107,14 @@ public class TablePress : MonoBehaviour
         }
         slider.gameObject.SetActive(false);
         hasTablet = true;
+        Powder powder = GetComponentInChildren<Powder>();
+        this.powder = powder;
+        powder.gameObject.SetActive(false);
         Talk("Pressing Tablet Completed!");
         Debug.Log("Pressing Tablet Completed");
     }
 
-    private void Talk(string text) {
+    public void Talk(string text) {
         HideDialogBubble();
         TMP_Text content = dialogBubble.GetComponentInChildren<TMP_Text>();
         content.text = text;

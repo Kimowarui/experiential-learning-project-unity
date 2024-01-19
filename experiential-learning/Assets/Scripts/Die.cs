@@ -10,7 +10,6 @@ public class Die : MonoBehaviour, IDropHandler
         if (eventData.pointerDrag.GetComponent<Powder>()) {
             Vector2 position = GetComponent<RectTransform>().anchoredPosition;
             Transform parent = GetComponent<RectTransform>().parent;
-            parent.GetComponent<TablePress>().isPowderExcess = true;
             eventData.pointerDrag.transform.SetParent(parent);
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = position;
         } else if (eventData.pointerDrag.GetComponent<Spatula>()) {

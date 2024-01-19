@@ -10,6 +10,9 @@ public class Spatula : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
     private Image image;
     private CanvasGroup canvasGroup;
     private Transform parent;
+    private Vector2 startPos;
+    private Transform originalParent;
+    private Vector2 originalScale;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -30,7 +33,7 @@ public class Spatula : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
         // Debug.Log("OnEndDrap");
         image.color = new Color32(255, 255, 255, 255);
         canvasGroup.blocksRaycasts = true;
-        // Destroy(gameObject);
+        respawn();
     }
 
     void Start(){
@@ -38,6 +41,9 @@ public class Spatula : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
         image = GetComponent<Image>();
         canvasGroup = GetComponent<CanvasGroup>();
         parent = transform.parent;
+        startPos = rectTransform.anchoredPosition;
+        originalParent = transform.parent;
+        originalScale = transform.localScale;
     }
     private void OnTriggerEnter2D(Collider2D collider2D) {
         // if ((targetLayer.value & (1 << collider2D.gameObject.layer)) != 0) {
@@ -47,5 +53,13 @@ public class Spatula : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
         if (collider2D.GetComponentInParent<TablePress>()) {
             collider2D.GetComponent<Powder>().removeExcessivePowder();
         }
+    }
+
+    private void respawn() {
+        GameObject obj = Instantiate(gameObject, new Vector2(0, 0), Quaternion.identity);
+        obj.transform.SetParent(originalParent);
+        obj.transform.localScale = originalScale;
+        obj.GetComponent<RectTransform>().anchoredPosition = startPos;
+        Destroy(gameObject);
     }
 }
