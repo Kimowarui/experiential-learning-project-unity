@@ -17,6 +17,11 @@ public class Spatula : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
     public void OnBeginDrag(PointerEventData eventData)
     {
         // Debug.Log("OnBeginDrap");
+        if (transform.GetComponentInParent<Slot>()) {
+            startPos = rectTransform.anchoredPosition;
+            originalParent = transform.parent;
+            originalScale = transform.localScale;
+        }
         image.color = new Color32(255, 255, 255, 170);
         transform.SetParent(GetComponentInParent<Canvas>().transform);
         canvasGroup.blocksRaycasts = false;
@@ -33,7 +38,7 @@ public class Spatula : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragH
         // Debug.Log("OnEndDrap");
         image.color = new Color32(255, 255, 255, 255);
         canvasGroup.blocksRaycasts = true;
-        respawn();
+        if (!gameObject.transform.parent.GetComponent<Slot>()) respawn();
     }
 
     void Start(){

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class MaterialPreparation : MonoBehaviour
 {
+
     private TMP_InputField drugIn;
     private TMP_InputField paracetamolIn;
     private TMP_InputField lactoseIn;
@@ -37,7 +38,7 @@ public class MaterialPreparation : MonoBehaviour
             lactose = int.Parse(lactoseIn.text);
             mgst = int.Parse(mgstIn.text);
 
-            powder.prepare(drug, paracetamol, lactose, mgst);
+            // powder.prepare(drug, paracetamol, lactose, mgst);
 
         } catch (FormatException) {
             Debug.Log("Invalid Format");
