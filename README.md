@@ -1,6 +1,6 @@
 # Unity Project: Experiential Learning
 
-Welcome to the Experiential Learning Unity project! This repository contains all the necessary files and assets for the project. Follow the instructions below to set up the project on your local machine.
+Welcome to the Experiential Learning Unity project! This repository contains all the necessary files and assets for the project. Follow the instructions below to set up the project on your local machine. You can trial the game by clicking [here](https://kimowarui.itch.io/laboratory-simulation) to play the latest version online.
 
 ## Table of Contents
 
@@ -85,7 +85,9 @@ Make sure you have the correct version of Unity installed. You can download it f
 ```
 - **Scenes**:
   - `HomeScene.unity`: This is the starting scene of the game. It serves as the main menu or landing page where the player begins their journey.
+      - ![homepage](image/homepage.png)
   - `PreparationRoom.unity`: This is the in-game scene where includes all the interactive elements.
+      - ![ingame](image/ingame.png)  
 - **Scripts**:
   - `Die.cs`: Handles the behaviors and interactions of the die tool.
   - `DrugSpawner.cs`: Handles the spawning of drug-related items in the game.
